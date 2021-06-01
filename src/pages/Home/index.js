@@ -11,6 +11,8 @@ import {
   ContainerInput,
   BoxIcon,
   Input,
+  ButtonLink,
+  ButtonLinkText
 } from "./styles";
 import { Feather } from "@expo/vector-icons";
 
@@ -27,15 +29,18 @@ export default function Home() {
         <Logo source={require("../../assets/Logo.png")} resizeMode="contain" />
       </ContainerLogo>
       <ContainerContent>
-        <Title>Link b</Title>
-        <SubTitle>Cole seu link para encurtar</SubTitle>
+        <Title>URLdim</Title>
+        <SubTitle>Cole o link que deseja encurtar</SubTitle>
 
         <ContainerInput>
           <BoxIcon>
             <Feather name="link" size={22} color="#fff" />
           </BoxIcon>
-          <Input placeholder="Cole seu link aqui..." />
+          <Input placeholder="Cole seu link aqui..." placeholderTextColor="#fff"/>
         </ContainerInput>
+        <ButtonLink>
+          <ButtonLinkText>Gerar Link</ButtonLinkText>
+        </ButtonLink>
       </ContainerContent>
     </LinearGradient>
   );
