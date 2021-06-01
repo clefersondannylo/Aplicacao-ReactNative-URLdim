@@ -2,7 +2,17 @@ import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import StatusBarPage from "../../components/StatusBarPage";
 import Menu from "../../components/Menu";
-import { ContainerLogo, Logo, ContainerContent, Title, SubTitle} from "./styles";
+import {
+  ContainerLogo,
+  Logo,
+  ContainerContent,
+  Title,
+  SubTitle,
+  ContainerInput,
+  BoxIcon,
+  Input,
+} from "./styles";
+import { Feather } from "@expo/vector-icons";
 
 export default function Home() {
   return (
@@ -19,6 +29,13 @@ export default function Home() {
       <ContainerContent>
         <Title>Link b</Title>
         <SubTitle>Cole seu link para encurtar</SubTitle>
+
+        <ContainerInput>
+          <BoxIcon>
+            <Feather name="link" size={22} color="#fff" />
+          </BoxIcon>
+          <Input placeholder="Cole seu link aqui..." />
+        </ContainerInput>
       </ContainerContent>
     </LinearGradient>
   );

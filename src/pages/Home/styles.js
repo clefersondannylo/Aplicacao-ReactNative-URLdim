@@ -29,3 +29,8 @@ text-align: center ;
 padding-bottom: 10%;
 `;
 
+export const ContainerInput = styled.View``;
+
+export const BoxIcon = styled.View``;
+
+export const Input = styled.TextInput``;
