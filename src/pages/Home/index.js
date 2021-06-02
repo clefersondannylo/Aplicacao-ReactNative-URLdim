@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
+  Platform,
+  Modal
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import StatusBarPage from "../../components/StatusBarPage";
@@ -19,8 +21,17 @@ import {
   ButtonLink,
   ButtonLinkText,
 } from "./styles";
+import ModalLink from '../../components/ModalLink'
 import { Feather } from "@expo/vector-icons";
 export default function Home() {
+  const [input, setInput] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  
+  function handleShortLink() {
+   // alert("URL encurtada: " + input);
+    setModalVisible(true);
+  }
+  
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <LinearGradient
@@ -29,7 +40,10 @@ export default function Home() {
       >
         <StatusBarPage barStyle="ligh-content" backgroundColor="#0085ff" />
         <Menu />
-        <KeyboardAvoidingView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "android" ? "padding" : "position"}
+          enabled
+        >
           <ContainerLogo>
             <Logo
               source={require("../../assets/Logo.png")}
@@ -47,13 +61,22 @@ export default function Home() {
               <Input
                 placeholder="Cole seu link aqui..."
                 placeholderTextColor="#fff"
+                autoCapitalize="none"
+                autoCorrect={false}
+                keybordType="url"
+                value={input}
+                onChangeText={(text) => setInput(text)}
               />
             </ContainerInput>
-            <ButtonLink>
+            <ButtonLink onPress={handleShortLink} >
               <ButtonLinkText>Gerar Link</ButtonLinkText>
             </ButtonLink>
           </ContainerContent>
         </KeyboardAvoidingView>
+        <Modal
+        visible={false} transparent animationType='slide'>
+          <ModalLink/>
+        </Modal>
       </LinearGradient>
     </TouchableWithoutFeedback>
   );
