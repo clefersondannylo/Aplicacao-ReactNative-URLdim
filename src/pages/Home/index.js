@@ -74,8 +74,8 @@ export default function Home() {
           </ContainerContent>
         </KeyboardAvoidingView>
         <Modal
-        visible={false} transparent animationType='slide'>
-          <ModalLink/>
+        visible={modalVisible } transparent animationType='slide'>
+          <ModalLink onClose={()=> setModalVisible(false)}/>
         </Modal>
       </LinearGradient>
     </TouchableWithoutFeedback>
