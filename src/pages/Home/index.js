@@ -4,7 +4,8 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Modal
+  Modal,
+  ActivityIndicator,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import StatusBarPage from "../../components/StatusBarPage";
@@ -21,17 +22,34 @@ import {
   ButtonLink,
   ButtonLinkText,
 } from "./styles";
-import ModalLink from '../../components/ModalLink'
+import ModalLink from "../../components/ModalLink";
 import { Feather } from "@expo/vector-icons";
+import api from "../../services/api";
 export default function Home() {
+  const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  
-  function handleShortLink() {
-   // alert("URL encurtada: " + input);
-    setModalVisible(true);
+  const [data, setData] = useState({})
+
+  async function handleShortLink() {
+    setLoading(true);
+    try {
+      const response = await api.post("/shorten", {
+        long_url: input,
+      });
+      setData(response.data)
+      setModalVisible(true)
+      Keyboard.dismiss();
+      setLoading(false);
+      setInput("");
+    } catch {
+      alert("algo deu errado");
+      Keyboard.dismiss();
+      setInput("");
+      setLoading(false);
+    }
   }
-  
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <LinearGradient
@@ -68,14 +86,17 @@ export default function Home() {
                 onChangeText={(text) => setInput(text)}
               />
             </ContainerInput>
-            <ButtonLink onPress={handleShortLink} >
-              <ButtonLinkText>Gerar Link</ButtonLinkText>
+            <ButtonLink onPress={handleShortLink}>
+              {loading ? (
+                <ActivityIndicator color="#121212" size={24} />
+              ) : (
+                <ButtonLinkText>Gerar Link</ButtonLinkText>
+              )}
             </ButtonLink>
           </ContainerContent>
         </KeyboardAvoidingView>
-        <Modal
-        visible={modalVisible } transparent animationType='slide'>
-          <ModalLink onClose={()=> setModalVisible(false)}/>
+        <Modal visible={modalVisible} transparent animationType="slide">
+          <ModalLink onClose={() => setModalVisible(false)} data={data} />
         </Modal>
       </LinearGradient>
     </TouchableWithoutFeedback>
