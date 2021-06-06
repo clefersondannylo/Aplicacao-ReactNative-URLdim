@@ -25,6 +25,7 @@ import {
 import ModalLink from "../../components/ModalLink";
 import { Feather } from "@expo/vector-icons";
 import api from "../../services/api";
+import {saveLink} from '../../utils/storeLinks'
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
@@ -39,6 +40,9 @@ export default function Home() {
       });
       setData(response.data)
       setModalVisible(true)
+
+      saveLink('youtubelink', response.data)
+
       Keyboard.dismiss();
       setLoading(false);
       setInput("");
