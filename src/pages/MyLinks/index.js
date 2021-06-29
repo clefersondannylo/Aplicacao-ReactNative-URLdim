@@ -19,10 +19,12 @@ export default function MyLinks() {
   const [data, setData] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     async function getLinks(){
       const result = await getLinksSave('youtubelink');
       setLinks(result);
+      setLoading(false);
     }
     getLinks()
   }, [isFocused]);
@@ -35,30 +37,32 @@ export default function MyLinks() {
   async function handleDelete(id){
     const result = await deleteLink(links, id);
     setLinks(result)
-    setLoading(false)
+    // setLoading(false)
   }
   return (
     <Container>
-      <StatusBarPage barStyle="light-content" backgroundColor="#132742" />
+      <StatusBarPage 
+      barStyle="light-content" 
+      backgroundColor="#132742" />
+
       <Menu />
+
       <Title>Meus links </Title>
 
-      {
-        loading && (
+
+      {loading && (
             <ContainerEmpty>
              <ActivityIndicator color="#fff" size={25} />
            </ContainerEmpty>
-        )
-      }
+        )}
 
 
-      {
-        !loading && links.length === 0 && (
+      {!loading && links.length === 0 && (
            <ContainerEmpty>
              <WarningText> Vôce ainda não possui nenhum link </WarningText>
            </ContainerEmpty>
-         )
-      }
+         )}
+
       <ListLinks
         data={links}
         keyExtractor={(item) => String(item.id)}
@@ -67,8 +71,13 @@ export default function MyLinks() {
         showsVerticalScrollIndicator={false}
       />
 
-        <Modal visible={modalVisible} transparent animationType="slide">
-          <ModalLink onClose={() => setModalVisible(false)} data={data} />
+        <Modal visible={modalVisible}
+        transparent 
+        animationType="slide">
+
+          <ModalLink 
+          onClose={() => setModalVisible(false)} 
+          data={data} />
         </Modal>
     </Container>
   );
