@@ -1,5 +1,5 @@
 <h1 align="center">
-     <img alt="logo URLdim" title="#URLdim" src="./assets-readme/logo.gif" />
+    <img alt="logo URLdim" title="#URLdim" src="./assets-readme/logo.gif"  width="150px" height="150px" />
 </h1>
 
 
